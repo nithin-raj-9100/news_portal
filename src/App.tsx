@@ -4,8 +4,8 @@ import { Button } from "./components/ui/button";
 
 function App() {
   const [news, setNews] = useState([]);
-  const [error, setError] = useState(null);
-  const url = "https://newsapi.org/v2/everything?";
+  // const [error, setError] = useState(null);
+  // const url = "https://newsapi.org/v2/everything?";
 
   useEffect(() => {
     fetch(
@@ -20,7 +20,7 @@ function App() {
   return (
     <>
       <Button>Click me</Button>
-      {news.map((item) => (
+      {news.map((item: { title: string; description: string }) => (
         <div key={item.title}>
           <h1>{item.title}</h1>
           <p>{item.description}</p>
