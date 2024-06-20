@@ -1,33 +1,28 @@
-import { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import "./App.css";
-import { Button } from "./components/ui/button";
+import { Routes, Route, Link } from "react-router-dom";
+import Layout from "./components/Layout";
+import { PaginationDemo } from "./components/ui/MyPagination";
 
 function App() {
-  const [news, setNews] = useState([]);
-  // const [error, setError] = useState(null);
-  // const url = "https://newsapi.org/v2/everything?";
-
-  useEffect(() => {
-    fetch(
-      `https://newsapi.org/v2/everything?q=bitcoin&apiKey=${import.meta.env.VITE_API_KEY}`,
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setNews(data.articles);
-      });
-  }, []);
-
   return (
     <>
-      <Button>Click me</Button>
-      {news.map((item: { title: string; description: string }) => (
-        <div key={item.title}>
-          <h1>{item.title}</h1>
-          <p>{item.description}</p>
-        </div>
-      ))}
+      <Routes>
+        <Route path="*" element={<Layout />} />
+      </Routes>
     </>
   );
 }
 
 export default App;
+
+function NoMatch() {
+  return (
+    <div>
+      <h2>Nothing to see here!</h2>
+      <p>
+        <Link to="/">Go to the home page</Link>
+      </p>
+    </div>
+  );
+}

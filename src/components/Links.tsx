@@ -1,8 +1,18 @@
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
-const tabs = ["Home", "Top News", "India", "America"];
+export const tabs = [
+  "Home",
+  "World",
+  "Business",
+  "Technology",
+  "Science",
+  "Sports",
+  "Health",
+  "Entertainment",
+];
 
 interface TabProps {
   text: string;
@@ -21,12 +31,13 @@ const Tab = ({ text, selected, setSelected, customID }: TabProps) => {
           : "hover:text-gray-900 dark:hover:text-gray-100"
       } relative rounded-md px-2 py-2 text-lg font-medium text-gray-500 transition-colors duration-300 focus-within:outline-red-500/50`}
     >
-      <a
+      <Link
         className="relative z-10"
-        href={text.toLowerCase() === "home" ? "/" : `/${text.toLowerCase()}`}
+        to={text.toLowerCase() === "home" ? "/" : `/${text.toLowerCase()}`}
+        // to={`/${id}`}
       >
         {text}
-      </a>
+      </Link>
       {selected && (
         <motion.div
           className="absolute left-0 top-0 flex size-full h-full w-full items-end justify-center"
