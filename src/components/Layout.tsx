@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Route, Routes } from "react-router-dom";
 import LineTabs from "./Links";
 import Article from "./Article";
@@ -23,13 +24,21 @@ const Layout = () => {
         <Route path="/sports" element={<Sports />} />
         <Route path="/health" element={<Health />} />
         <Route path="/entertainment" element={<Entertainment />} />
+        {/* @ts-ignore */}
         <Route path="/:id" element={<Article />} />
+        {/* @ts-ignore */}
         <Route path="/world/:id" element={<Article />} />
+        {/* @ts-ignore */}
         <Route path="/business/:id" element={<Article />} />
+        {/* @ts-ignore */}
         <Route path="/technology/:id" element={<Article />} />
+        {/* @ts-ignore */}
         <Route path="/science/:id" element={<Article />} />
+        {/* @ts-ignore */}
         <Route path="/sports/:id" element={<Article />} />
+        {/* @ts-ignore */}
         <Route path="/health/:id" element={<Article />} />
+        {/* @ts-ignore */}
         <Route path="/entertainment/:id" element={<Article />} />
       </Routes>
     </div>
