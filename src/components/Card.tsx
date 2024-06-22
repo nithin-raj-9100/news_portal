@@ -9,6 +9,13 @@ interface CardProps {
 const Card = ({ title, description, image }: CardProps & { title: string }) => {
   const pathName = window.location.pathname;
 
+  const MAX_LENGTH = 100;
+
+  const truncatedDescription =
+    description.length > MAX_LENGTH
+      ? description.slice(0, MAX_LENGTH) + "..."
+      : description;
+
   return (
     <div key={title}>
       <div className="m-auto max-w-sm rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800">
@@ -18,7 +25,7 @@ const Card = ({ title, description, image }: CardProps & { title: string }) => {
             {title}
           </h5>
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            {description}
+            {truncatedDescription}
           </p>
           <Link
             to={

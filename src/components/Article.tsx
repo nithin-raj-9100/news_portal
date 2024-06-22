@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Loading from "./Loading";
+import { useNavigate } from "react-router-dom";
 
 const Article = () => {
   const [article, setArticle] = useState({
@@ -10,25 +12,56 @@ const Article = () => {
     source: "",
     title: "",
   });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  const navigate = useNavigate();
 
   const { id } = useParams();
-  const baseURL = "https://gnews.io/api/v4/search?q=";
+  const baseURL = "https://gnews.io/api/v4/search";
   const apiKey = import.meta.env.VITE_API_KEY;
 
+  // @ts-expect-error - TS doesn't know that id is a string
+  const encodedQuery = encodeURIComponent(id);
+
   useEffect(() => {
-    fetch(`${baseURL}${id}&lang=en&apikey=${apiKey}`)
+    fetch(
+      `${baseURL}?q=${encodedQuery}&lang=en&in=title&sortby=publishedAt&apikey=${apiKey}`,
+    )
+      // .then((data) => {
+      //   if (!data.ok) {
+      //     throw new Error("Error fetching article");
+      //   }
+      //   return data.json();
+      // })
       .then((res) => res.json())
       .then((data) => {
-        setArticle({
-          content: data.articles[0].content,
-          description: data.articles[0].description,
-          image: data.articles[0].image,
-          publishedAt: data.articles[0].publishedAt,
-          source: data.articles[0].source,
-          title: data.articles[0].title,
-        });
+        console.log("data is ", data);
+        if (data.articles && data.articles.length > 0) {
+          setArticle({
+            content: data.articles[0].content,
+            description: data.articles[0].description,
+            image: data.articles[0].image,
+            publishedAt: data.articles[0].publishedAt,
+            source: data.articles[0].source,
+            title: data.articles[0].title,
+          });
+        } else {
+          setError(true);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching article:", error);
+        setError(true);
       });
-  });
+  }, [apiKey, encodedQuery]);
+
+  if (loading) return <Loading />;
+
+  if (error) {
+    return navigate("/");
+  }
 
   return (
     <div>
